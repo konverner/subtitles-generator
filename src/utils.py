@@ -14,7 +14,7 @@ def extract_audio(input_path: pathlib.Path):
     print("extracting audio from video ...")
     video = VideoFileClip(str(input_path))
     audio_path = input_path.with_suffix('.wav')
-    video.audio.write_audiofile(audio_path, logger=None)
+    video.audio.write_audiofile(audio_path)
     return audio_path
 
 
