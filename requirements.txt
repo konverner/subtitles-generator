@@ -1,0 +1,7 @@
+imageio==2.4.1
+librosa==0.9.2
+moviepy==1.0.3
+numpy==1.23.2
+torch==1.12.1
+tqdm==4.64.1
+transformers==4.22.0
