@@ -18,7 +18,7 @@ def extract_audio(input_path: pathlib.Path):
     return audio_path
 
 
-def create_srt(subtitles_path: pathlib.Path, texts: list[str], interval_size: int):
+def create_srt(subtitles_path: pathlib.Path, texts: list, interval_size: int):
 
     if subtitles_path.suffix != '.srt':
         subtitles_path.rename(subtitles_path.with_suffix('.srt'))
