@@ -32,7 +32,7 @@ class Wav2vec:
             chunk_size: int = 10,
             sampling_rate: int = 16000,
             batch_size: int = 5
-    ) -> list[str]:
+    ):
         features = self.get_features(audio_path, chunk_size, sampling_rate)
         n = features.input_values.shape[0]
 
