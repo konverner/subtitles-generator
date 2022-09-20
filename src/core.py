@@ -32,7 +32,7 @@ class Wav2vec:
             chunk_size: int = 10,
             sampling_rate: int = 16000,
             batch_size: int = 5
-    ):
+    ) -> list[str]:
         features = self.get_features(audio_path, chunk_size, sampling_rate)
         n = features.input_values.shape[0]
 
@@ -41,12 +41,11 @@ class Wav2vec:
                 logits = []
                 for i in tqdm(range(0, n - batch_size, batch_size)):
                     logits.append(
-                        self.model(features.input_values[i:i + batch_size],
-                                   attention_mask=features.attention_mask[i:i + batch_size]).logits)
+                        self.model(features.input_values[i:i + batch_size]).logits)
                 logits = torch.cat(logits, axis=0)
 
             else:
-                logits = self.model(features.input_values, attention_mask=features.attention_mask).logits
+                logits = self.model(features.input_values).logits
 
         predicted_ids = torch.argmax(logits, dim=-1)
         predicted_texts = self.processor.batch_decode(predicted_ids, clean_up_tokenization_spaces=False)
