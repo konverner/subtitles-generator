@@ -4,12 +4,15 @@ from pathlib import Path
 
 from src.core import Wav2vec
 from src.utils import create_srt, extract_audio
-from src.config import MODEL_NAME, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE
+from src.config import MODEL_NAMES, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE, \
+                       SUPPORTED_LANGS, SUPPORTED_FORMATS
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description='It creates subtitles from a video or an audio')
 
+    parser.add_argument('lang', type=str,
+                        help='language of speech in an audio or video')
     parser.add_argument('input_file', type=str,
                         help='path to an audio or video file')
     parser.add_argument('--output_file', type=str,
@@ -17,6 +20,7 @@ def parse_args():
 
     # Sanity checks
     args = parser.parse_args()
+    lang = args.lang
     input_file = Path(args.input_file)
 
     try:
@@ -24,21 +28,23 @@ def parse_args():
     except:
         output_file = input_file.parents[0] / (input_file.stem + '.srt')
 
+    if lang not in SUPPORTED_LANGS:
+        raise ValueError(f'Language {lang} is not supported. Supported languages are {SUPPORTED_LANGS}')
     if not input_file.is_file():
         raise(OSError(f"Input file {input_file} does not exists"))
-    if input_file.suffix not in {'.wav', '.mp4', '.avi', '.webm'}:
+    if input_file.suffix not in SUPPORTED_FORMATS:
         raise ValueError('A file must be a video (mp4, avi, webm) or an audio (wav)')
 
-    return input_file, output_file
+    return input_file, output_file, lang
 
 
 def main():
-    input_file, output_file = parse_args()
+    input_file, output_file, lang = parse_args()
 
     if input_file.suffix in {'.mp4', '.avi', '.webm'}:
         input_file = extract_audio(input_file)
 
-    model = Wav2vec(MODEL_NAME)
+    model = Wav2vec(MODEL_NAMES[lang])
     print("transcribing audio ...")
     predicted_texts = model.transcribe(
         audio_path=input_file,
