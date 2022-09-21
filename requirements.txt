@@ -5,3 +5,4 @@ numpy
 torch==1.12.1
 tqdm==4.64.1
 transformers==4.22.0
+pyspellchecker==0.7.0
