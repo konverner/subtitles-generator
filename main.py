@@ -1,11 +1,12 @@
 import argparse
 
 from pathlib import Path
+from spellchecker import SpellChecker
 
 from src.core import Wav2vec
-from src.utils import create_srt, extract_audio
+from src.utils import create_srt, extract_audio, text_likelihood
 from src.config import MODEL_NAMES, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE, \
-                       SUPPORTED_LANGS, SUPPORTED_FORMATS
+                       SUPPORTED_LANGS, SUPPORTED_FORMATS, LIKELIHOOD_TRESHOLD
 
 
 def parse_args():
@@ -52,6 +53,14 @@ def main():
         batch_size=BATCH_SIZE,
         chunk_size=CHUNK_SIZE
     )
+
+    # remove transcriptions that are not likely to be true
+    # such transcriptions are usually generated from non-speech content (e.g. music)
+
+    dictionary = SpellChecker(language=lang)
+    for i in range(len(predicted_texts)):
+        if text_likelihood(predicted_texts[i], dictionary) < LIKELIHOOD_TRESHOLD:
+            predicted_texts[i] = None
 
     print(f"writing subtitles into {output_file} ...")
     create_srt(output_file, predicted_texts, CHUNK_SIZE)
