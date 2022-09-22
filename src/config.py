@@ -6,5 +6,5 @@ CHUNK_SIZE = 4  # a size in seconds of one piece of audio used for one subtitles
 BATCH_SIZE = 10  # how many chunks are passed to a model at once
 LIKELIHOOD_TRESHOLD = 0.5  # threshold value for eliminating phrases that contains out-of-dictionary words
 
-SUPPORTED_LANGS = {'eng', 'de'}
+SUPPORTED_LANGS = {'en', 'de'}
 SUPPORTED_FORMATS = {'.wav', '.mp4', '.avi', '.webm'}
