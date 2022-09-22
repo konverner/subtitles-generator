@@ -8,7 +8,7 @@ It allows to generate subtitles from a video or an audio and save it in `.srt` f
 
 Run the `main.py` passing the following arguments:
 
-1) `lang` : language of speech in your video (`eng` or `de`).
+1) `lang` : language of speech in your video (`en` or `de`).
 2) `input_path` : path to an audio (`.wav`) or a video (`.mp4`, `.avi`, `.webm`).
 3) `output_path` (optional) : path to result .srt file.
 
