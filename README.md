@@ -8,12 +8,13 @@ It allows to generate subtitles from a video or an audio and save it in `.srt` f
 
 Run the `main.py` passing the following arguments:
 
-1) `lang` : language of speech in your video (`en` or `de`).
-2) `input_path` : path to an audio (`.wav`) or a video (`.mp4`, `.avi`, `.webm`).
-3) `output_path` (optional) : path to result .srt file.
+1) `model_size` (optional) : size of model to use (`large`, `medium`, `base`)
+2) `lang` : language of speech in your video (`english`, `german`, 'french').
+3) `input_path` : path to an audio (`.wav`) or a video (`.mp4`, `.avi`, `.webm`).
+4) `output_path` (optional) : path to result .srt file.
 
 e.g.
 
-`python main.py de /episodes/king_of_the_hill_de.mp4`
+`!python main.py large german /content/test.mp4`
 
 .srt file with subtitles will be located in `output_path` if the optional argument was passed or in `input_path` with `.srt` extension otherwise.
