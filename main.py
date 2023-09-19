@@ -52,7 +52,7 @@ if __name__ == '__main__':
     predicted_texts = model.transcribe(
         audio_path=input_file,
         sampling_rate=16_000,
-        chunk_size=2
+        chunk_size=CHUNK_SIZE
     )
 
     # dictionary = SpellChecker(language=lang)
