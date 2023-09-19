@@ -2,16 +2,21 @@ import librosa
 import torch
 from tqdm import tqdm
 import numpy as np
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
+from transformers import WhisperProcessor, WhisperForConditionalGeneration
 
 
-class Wav2vec:
+class Model:
     def __init__(
             self,
-            model_name: str
+            model_name: str,
+            lang: str
     ):
-        self.model = Wav2Vec2ForCTC.from_pretrained(model_name)
-        self.processor = Wav2Vec2Processor.from_pretrained(model_name)
+        self.model = WhisperForConditionalGeneration.from_pretrained(model_name)
+        self.processor = WhisperProcessor.from_pretrained(model_name)
+        self.forced_decoder_ids = self.processor.get_decoder_prompt_ids(
+          language=lang, task="transcribe")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model.to(self.device)
 
     def get_features(
             self,
@@ -23,30 +28,39 @@ class Wav2vec:
         chunks = np.array_split(speech_array,
                                 speech_array.shape[0] // (chunk_size * sampling_rate) + (
                                             speech_array.shape[0] % (chunk_size * sampling_rate) > 0))
-        features = self.processor(chunks, sampling_rate=sampling_rate, return_tensors="pt", padding=True)
-        return features
+        input_features_chunks = [
+            self.processor(
+                chunk, sampling_rate=sampling_rate, return_tensors="pt"
+                ).input_features
+            for chunk in chunks
+        ]
+
+        input_features_chunks = []
+        for chunk in chunks:
+            input_features_chunks.append(
+              self.processor(
+                  chunk, sampling_rate=sampling_rate, return_tensors="pt").input_features
+            )
+        return input_features_chunks
+
 
     def transcribe(
             self,
             audio_path: str,
             chunk_size: int = 10,
             sampling_rate: int = 16000,
-            batch_size: int = 5
     ) -> list[str]:
-        features = self.get_features(audio_path, chunk_size, sampling_rate)
-        n = features.input_values.shape[0]
+        input_features_chunks = self.get_features(audio_path, chunk_size, sampling_rate)
+        transcriptions = []
+        n = len(input_features_chunks)
+        for i in tqdm(range(0, n, 4)):
+            predicted_ids = self.model.generate(
+              torch.concat(input_features_chunks[i:i+4]).to(self.device),
+                forced_decoder_ids=self.forced_decoder_ids
+            )
+            transcription = self.processor.batch_decode(
+              predicted_ids, skip_special_tokens=True
+            )
+            transcriptions.extend(transcription)
 
-        with torch.no_grad():
-            if n > batch_size:
-                logits = []
-                for i in tqdm(range(0, n - batch_size, batch_size)):
-                    logits.append(
-                        self.model(features.input_values[i:i + batch_size]).logits)
-                logits = torch.cat(logits, axis=0)
-
-            else:
-                logits = self.model(features.input_values).logits
-
-        predicted_ids = torch.argmax(logits, dim=-1)
-        predicted_texts = self.processor.batch_decode(predicted_ids, clean_up_tokenization_spaces=False)
-        return predicted_texts
+        return transcriptions
