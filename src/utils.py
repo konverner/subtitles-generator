@@ -24,7 +24,7 @@ def create_srt(subtitles_path: pathlib.Path, texts: list[str], interval_size: in
     if subtitles_path.suffix != '.srt':
         subtitles_path.rename(subtitles_path.with_suffix('.srt'))
 
-    f = open(subtitles_path, 'w')
+    f = open(subtitles_path, 'w', encoding='utf-8')
     timer = 0
     frame_counter = 0
     for text in texts:
