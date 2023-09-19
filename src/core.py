@@ -1,7 +1,7 @@
-import librosa
-import torch
-from tqdm import tqdm
 import numpy as np
+import torch
+import librosa
+from tqdm import tqdm
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
 
 
@@ -21,7 +21,7 @@ class Model:
     def get_features(
             self,
             path: str,
-            chunk_size: int = 10,
+            chunk_size: int = 4,
             sampling_rate: int = 16000
     ):
         speech_array, sampling_rate = librosa.load(path, sr=sampling_rate)
@@ -47,7 +47,7 @@ class Model:
     def transcribe(
             self,
             audio_path: str,
-            chunk_size: int = 10,
+            chunk_size: int = 4,
             sampling_rate: int = 16000,
     ) -> list[str]:
         input_features_chunks = self.get_features(audio_path, chunk_size, sampling_rate)
