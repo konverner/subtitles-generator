@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from pathlib import Path
@@ -62,3 +63,5 @@ if __name__ == '__main__':
 
     print(f"writing subtitles into {output_file} ...")
     create_srt(output_file, predicted_texts, CHUNK_SIZE)
+    os.remove(input_file)
+
