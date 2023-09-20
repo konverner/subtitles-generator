@@ -1,10 +1,10 @@
 ## Multilingual Subtitles Generator
 
-It allows to generate subtitles from a video or an audio and save it in `.srt` file. For now, 2 languages are available: English and German.
-
-![](https://github.com/konverner/subtitles-generator/blob/main/diagram.png?raw=true)
+It allows to generate subtitles from a video or an audio and save it in `.srt` file. For now, 3 languages are available: English, French and German.
 
 ## Get Started
+
+The script can run on CPU or GPU. It is recommended to use base or medium models to run the script on CPU. Besides, one can use Google Colab (see [notebook](https://github.com/konverner/subtitles-generator/blob/main/subtitles_generator.ipynb)).
 
 Run the `main.py` passing the following arguments:
 
