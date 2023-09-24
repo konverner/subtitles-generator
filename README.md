@@ -9,7 +9,7 @@ The script can run on CPU or GPU. It is recommended to use base or medium models
 Run the `main.py` passing the following arguments:
 
 1) `model_size` (optional) : size of model to use (`large`, `medium`, `base`)
-2) `lang` : language of speech in your video (`english`, `german`, 'french').
+2) `lang` : language of speech in your video (`english`, `german`, `french`).
 3) `input_path` : path to an audio (`.wav`) or a video (`.mp4`, `.avi`, `.webm`).
 4) `output_path` (optional) : path to result .srt file.
 
@@ -17,4 +17,4 @@ e.g.
 
 `!python main.py large german /content/test.mp4`
 
-.srt file with subtitles will be located in `output_path` if the optional argument was passed or in `input_path` with `.srt` extension otherwise.
+`.srt` file with subtitles will be located in `output_path` if the optional argument was passed or in `input_path` with `.srt` extension otherwise.
