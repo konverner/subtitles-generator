@@ -15,7 +15,7 @@ Run the `main.py` passing the following arguments:
 
 e.g.
 
-`!python main.py large german /content/test.mp4`
+`python main.py large german /content/test.mp4`
 
 `.srt` file with subtitles will be located in `output_path` if the optional argument was passed or in `input_path` with `.srt` extension otherwise.
 
