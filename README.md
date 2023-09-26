@@ -1,6 +1,6 @@
 ## Multilingual Subtitles Generator
 
-It allows to generate subtitles from a video or an audio and save it in `.srt` file. For now, 99 languages are available including all major language such as English, Mandarin, Spanich, etc.
+It allows to generate subtitles from a video or an audio and save it in `.srt` file. For now, 99 languages are available including all major language such as English, Mandarin, Spanish, etc.
 
 ## Get Started
 
