@@ -17,7 +17,7 @@ def extract_audio(input_path: pathlib.Path) -> str:
     audio_path = input_path.with_suffix('.wav')
     video.audio.write_audiofile(audio_path)
     return audio_path
-
+    
 
 def create_srt(subtitles_path: pathlib.Path, texts: list[str], interval_size: int):
 
@@ -30,6 +30,10 @@ def create_srt(subtitles_path: pathlib.Path, texts: list[str], interval_size: in
     for text in texts:
         # if text is None than we need to make a gap in subtitles flow
         if text is not None:
+
+            # if the text too long for a frame
+            text = text[:250]
+                
             frame_counter += 1
             start_time = str(datetime.timedelta(seconds=timer))+',000'
             end_time = str(datetime.timedelta(seconds=timer+interval_size))+',000'
