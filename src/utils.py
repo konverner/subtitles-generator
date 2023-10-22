@@ -43,12 +43,12 @@ def create_srt(subtitles_path: pathlib.Path, texts: list[str], interval_size: in
     f.close()
 
 
-def text_likelihood(text: str, dictionary: spellchecker.SpellChecker) -> float:
-    if len(text) == 0:
-        return 0.0
-    words = text.split()
-    known = 0
-    for word in words:
-        known += len(dictionary.known([word]))
-    score = known/len(words)
-    return score
+# def text_likelihood(text: str, dictionary: spellchecker.SpellChecker) -> float:
+#     if len(text) == 0:
+#         return 0.0
+#     words = text.split()
+#     known = 0
+#     for word in words:
+#         known += len(dictionary.known([word]))
+#     score = known/len(words)
+#     return score
