@@ -2,7 +2,6 @@ import datetime
 import pathlib
 
 import imageio
-import spellchecker
 imageio.plugins.ffmpeg.download()
 from moviepy.editor import VideoFileClip
 
