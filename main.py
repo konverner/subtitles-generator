@@ -2,10 +2,9 @@ import os
 import argparse
 
 from pathlib import Path
-from spellchecker import SpellChecker
 
 from src.core import Model
-from src.utils import create_srt, extract_audio, text_likelihood
+from src.utils import create_srt, extract_audio
 from src.config import MODEL_NAMES, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE, \
                        SUPPORTED_LANGS, SUPPORTED_FORMATS, LIKELIHOOD_TRESHOLD
 
