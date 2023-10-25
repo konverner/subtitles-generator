@@ -1,5 +1,7 @@
 import os
 import argparse
+import warnings
+warnings.filterwarnings("ignore")
 
 from pathlib import Path
 
