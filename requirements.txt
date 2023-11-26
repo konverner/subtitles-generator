@@ -4,5 +4,4 @@ hydra-core
 moviepy
 numpy
 torch
-tqdm==4.64.1
-transformers==4.33.2
+transformers

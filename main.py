@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from pathlib import Path
-import hydra
+from hydra import compose, initialize
 from omegaconf import DictConfig
 
 from src.core import Model
@@ -17,8 +17,8 @@ from src.config import MODEL_NAMES, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE, \
 logger = logging.getLogger(__name__)
 
 
-def parse_args(config_path):
-    cfg = compose(parsed.name, overrides=args.overrides)
+def parse_args(cfg: DictConfig):
+
     parser = argparse.ArgumentParser(
       description='It creates subtitles from a video or an audio'
     )
@@ -50,8 +50,8 @@ def parse_args(config_path):
     
     if not input_file.is_file():
         raise(OSError(f"Input file {input_file} does not exists"))
-    
-    if input_file.suffix not in cfg.supported_media_formats.video or \
+    print(f"input_file.suffix {input_file.suffix}")
+    if input_file.suffix not in cfg.supported_media_formats.video and \
        input_file.suffix not in cfg.supported_media_formats.audio:
         raise ValueError(
           f"""A file must be a video: {cfg.supported_media_formats.video}
@@ -61,16 +61,14 @@ def parse_args(config_path):
     return input_file, output_file, lang, model_size
 
 
-@hydra.main(version_base=None, config_path="src/conf", config_name="config")
-def app(input_file, output_file, lang, model_size, cfg: DictConfig) -> None:
-  
-
+def app(cfg: DictConfig) -> None:
+  input_file, output_file, lang, model_size = parse_args(cfg)
   # if an input is video then we extract the audio from it
   if input_file.suffix in cfg.supported_media_formats.video:
       logger.info("Extracting audio ...")
       input_file = extract_audio(input_file)
 
-  model = Model(cnf.model_names[model_size], lang)
+  model = Model(cfg.model_names[model_size], lang)
   logger.info("Generating subtitles ...")
   predicted_texts = model.transcribe(
       audio_path=input_file,
@@ -84,6 +82,7 @@ def app(input_file, output_file, lang, model_size, cfg: DictConfig) -> None:
 
 
 if __name__ == '__main__':
-  input_file, output_file, lang, model_size = parse_args()
-  app(input_file, output_file, lang, model_size)
+  with initialize(version_base=None, config_path="src/conf"):
+        cfg = compose(config_name="config")
+  app(cfg)
 
