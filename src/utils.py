@@ -1,3 +1,7 @@
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+os.environ["XDG_RUNTIME_DIR"] = "/tmp/runtime-root"
+
 import datetime
 import pathlib
 
