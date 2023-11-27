@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 import logging
 import warnings
@@ -10,11 +11,12 @@ from omegaconf import DictConfig
 
 from src.core import Model
 from src.utils import create_srt, extract_audio
-from src.config import MODEL_NAMES, CHUNK_SIZE, BATCH_SIZE, SAMPLING_RATE, \
-                       SUPPORTED_LANGS, SUPPORTED_FORMATS, LIKELIHOOD_TRESHOLD
 
 
 logger = logging.getLogger(__name__)
+logging_handler = logging.StreamHandler(sys.stdout)
+logging_handler.setLevel(logging.INFO)
+logger.addHandler(logging_handler)
 
 
 def parse_args(cfg: DictConfig):
@@ -50,14 +52,12 @@ def parse_args(cfg: DictConfig):
     
     if not input_file.is_file():
         raise(OSError(f"Input file {input_file} does not exists"))
-    print(f"input_file.suffix {input_file.suffix}")
     if input_file.suffix not in cfg.supported_media_formats.video and \
        input_file.suffix not in cfg.supported_media_formats.audio:
         raise ValueError(
           f"""A file must be a video: {cfg.supported_media_formats.video}
           or an audio {cfg.supported_media_formats.audio}"""
         )
-
     return input_file, output_file, lang, model_size
 
 
@@ -77,7 +77,9 @@ def app(cfg: DictConfig) -> None:
   )
 
   logger.info(f"Writing subtitles into {output_file} ...")
-  create_srt(output_file, predicted_texts, CHUNK_SIZE)
+  create_srt(
+    output_file, predicted_texts, cfg.processing.chunk_size, logger=logger
+  )
   os.remove(input_file)
 
 
@@ -85,4 +87,3 @@ if __name__ == '__main__':
   with initialize(version_base=None, config_path="src/conf"):
         cfg = compose(config_name="config")
   app(cfg)
-
