@@ -46,7 +46,14 @@ def parse_args(cfg: DictConfig):
 
     if lang not in cfg.supported_languages:
         raise ValueError(
-            f"Language {lang} is not supported. Supported languages are {cfg.supported_languages}"
+            f"Language {lang} is not supported."\
+                "Supported languages are {cfg.supported_languages}"
+        )
+
+    if model_size not in cfg.model_names.keys():
+        raise ValueError(
+            f"Model size {model_size} is not supported."\
+                f"Supported model sizes are {cfg.model_names.keys()}"
         )
 
     if not input_file.is_file():
