@@ -4,7 +4,7 @@ It allows to generate subtitles from a video or an audio and save it in `.srt` f
 
 ## Get Started
 
-The script can be run on CPU or GPU. It is recommended to use base or medium models to run the script on CPU. Besides, one can use Google Colab (see [notebook](https://github.com/konverner/subtitles-generator/blob/main/subtitles_generator.ipynb)).
+The script can be run on CPU or GPU. It is recommended to use base or medium models to run the script on CPU. Besides, one can use Google Colab (see [notebook](https://github.com/konverner/subtitles-generator/notebooks/blob/main/subtitles_generator.ipynb)).
 
 Run the `main.py` passing the following arguments:
 
