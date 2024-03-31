@@ -53,7 +53,7 @@ def parse_args(cfg: DictConfig):
     if model_size not in cfg.model_names.keys():
         raise ValueError(
             f"Model size {model_size} is not supported."\
-                f"Supported model sizes are {cfg.model_names.keys()}"
+                f"Supported model sizes are {list(cfg.model_names.keys())}"
         )
 
     if not input_file.is_file():
