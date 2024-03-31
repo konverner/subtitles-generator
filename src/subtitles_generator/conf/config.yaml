@@ -1,7 +1,9 @@
 model_names:
-  large: openai/whisper-large-v2
+  large: openai/whisper-large-v3
   medium: openai/whisper-medium
   base: openai/whisper-base
+  small: openai/whisper-small
+  tiny: openai/whisper-tiny
 processing:
   sampling_rate: 16000
   chunk_size: 2
