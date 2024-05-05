@@ -1,4 +1,5 @@
 model_names:
+  large-distil: distil-whisper/distil-large-v3-openai
   large: openai/whisper-large-v3
   medium: openai/whisper-medium
   base: openai/whisper-base
