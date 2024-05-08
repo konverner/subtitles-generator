@@ -8,7 +8,7 @@ The script can be run on CPU or GPU. It is recommended to use base or medium mod
 
 Run the `main.py` passing the following arguments:
 
-1) `model_size` (optional) : size of model to use (`large`, `medium`, `base`, `small`, `tiny`), larger the model is, better the quality would be
+1) `model_size` (optional) : size of model to use (`large`, `large-distil`, `medium`, `base`, `small`, `tiny`), larger the model is, better the quality would be
 2) `lang` : language of speech in your video (e.g. `english`, `german`, `french`, see the list below).
 3) `input_path` : path to an audio (`.wav`) or a video (`.mp4`, `.avi`, `.webm`).
 4) `output_path` (optional) : path to result .srt file.
