@@ -13,7 +13,8 @@ REQUIRED_PKGS = [
     "moviepy==0.2.3.5",
     "numpy==2.3.0",
     "torch==2.7.0",
-    "transformers==4.35.2"
+    "transformers==4.35.2",
+    "imageio-ffmpeg==0.6.0"
 ]
 
 print(find_packages("src"))
