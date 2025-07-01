@@ -11,8 +11,8 @@ REQUIRED_PKGS = [
     "librosa==0.10.1",
     "hydra-core==1.3.2",
     "moviepy==0.2.3.5",
-    "numpy==1.23.5",
-    "torch",
+    "numpy==2.3.0",
+    "torch==2.7.0",
     "transformers==4.35.2"
 ]
 
@@ -21,7 +21,7 @@ print(find_packages("src"))
 setup(
     name="subtitles-generator",
     version="0.0.1",
-    description="Few-Shot Voice Cloning",
+    description="",
     long_description=README_TEXT,
     long_description_content_type="text/markdown",
     maintainer=MAINTAINER,
