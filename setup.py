@@ -7,11 +7,12 @@ README_TEXT = (Path(__file__).parent / "README.md").read_text(encoding="utf-8")
 MAINTAINER = "Konstantin Verner"
 MAINTAINER_EMAIL = "konst.verner@gmail.com"
 REQUIRED_PKGS = [
+    "numba==0.60.0",
     "imageio==2.4.1",
     "librosa==0.10.1",
     "hydra-core==1.3.2",
     "moviepy==0.2.3.5",
-    "numpy==2.3.0",
+    "numpy==2.0.0",
     "torch==2.7.0",
     "transformers==4.35.2",
     "imageio-ffmpeg==0.6.0"
